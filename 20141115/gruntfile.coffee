@@ -16,44 +16,9 @@ module.exports = (grunt)->
           targetDir: '_lib/'
           install: true
           cleanTargetDir: false
-          cleanBowerDir: true
+          cleanBowerDir: false
 
     copy:
-      init:
-        files:[
-          {
-            expand: true
-            cwd: '_lib/jquery/'
-            src: 'jquery.js'
-            dest: '<%= dir.dev %><%= dir.js %>'
-            filter: 'isFile'
-            dot: false
-          },
-          {
-            expand: true
-            cwd: '_lib/html5-boilerplate/js/vendor/'
-            src: ["**/modernizr*.js"]
-            dest: '<%= dir.dev %><%= dir.js %>'
-            filter: 'isFile'
-            dot: false
-          },
-          {
-            expand: true
-            cwd: '_lib/html5-boilerplate/css/'
-            src: ["**/*.css"]
-            dest: '<%= dir.dev %><%= dir.css %>'
-            filter: 'isFile'
-            dot: false
-          },
-          {
-            expand: true
-            cwd: '_lib/html5-boilerplate/'
-            src: ["index.html"]
-            dest: '<%= dir.dev %>'
-            filter: 'isFile'
-            dot: false
-          }
-        ]
       build:
         files:[
           { #html
@@ -67,7 +32,7 @@ module.exports = (grunt)->
           { #css
             expand: true
             cwd: "<%= dir.dev %><%= dir.css %>"
-            src: ["**/main_min.css"]
+            src: ["min.css"]
             dest: "<%= dir.release %><%= dir.css %>"
             filter: 'isFile'
             dot: false
@@ -83,23 +48,21 @@ module.exports = (grunt)->
           { #js
             expand: true
             cwd: "<%= dir.dev %><%= dir.js %>"
-            src: ["**/*.js"]
+            src: ["modernizr.js", "min.js"]
             dest: "<%= dir.release %><%= dir.js %>"
             filter: 'isFile'
             dot: false
           }
         ]
 
-    clean:
-      init: ["_lib/"]
-      build: ["<%= dir.release %>"]
+    clean: ["<%= dir.release %>"]
 
     sass: #sassコンパイル
       dist:
         options:
-          compass: true #compassを有効に
+          #compass: true #compassを有効に
           style: 'expanded' #_devの段階では標準書式で出力する
-          #sourcemap: 'none'
+          sourcemap: 'none'
         files:[
           {
             expand: true
@@ -109,6 +72,12 @@ module.exports = (grunt)->
             ext: '.css'
           }
         ]
+
+    autoprefixer:
+      target:
+        expand: true
+        src: '<%= dir.dev %><%= dir.css %>*.css'
+        dest: './'
 
     coffee: #coffeeコンパイル
       options:
@@ -124,7 +93,6 @@ module.exports = (grunt)->
       server:
         options:
           base: '<%= dir.dev %>'
-          port: 8888
 
     watch: #ファイル変更監視
       options:
@@ -133,28 +101,37 @@ module.exports = (grunt)->
         files: "<%= dir.dev %>**/*.html"
       sass:
         files: "<%= dir.dev %><%= dir.scss %>**/*.scss"
-        tasks: ["sass"]
-      js:
+        tasks: ["sass","autoprefixer","cssmin"]
+      coffee:
         files: "<%= dir.dev %><%= dir.coffee %>**/*.coffee"
         tasks : ['coffee']
-
+      js:
+        files: "<%= dir.dev %><%= dir.js %>*.js"
+        #tasks : ['uglify'] #uglifyの設定完了後にコメントを外して有効化する
 
     cssmin: #CSS連結/コンパイル
       combine:
-        files: #適宜変更
-          '<%= dir.dev %><%= dir.css %>main_min.css': ['<%= dir.dev %><%= dir.css %>normalize.css', '<%= dir.dev %><%= dir.css %>main.css']
+        files:
+          '<%= dir.dev %><%= dir.css %>min.css': '<%= dir.dev %><%= dir.css %>*.css'
 
     uglify: #js結合/コンパイル
       js:
-        files: #適宜変更
-          '<%= dir.dev %><%= dir.js %>script_min.js': ['<%= dir.dev %><%= dir.js %>script_a.js', '<%= dir.dev %><%= dir.js %>script_b.js']
+        files:
+          '<%= dir.dev %><%= dir.js %>min.js': ['<%= dir.dev %><%= dir.js %>script_a.js', '<%= dir.dev %><%= dir.js %>script_b.js'] #読み込まれる順番にjsを指定する
+
+    imagemin:
+      target:
+        files: [
+          expand: true
+          src: "<%= dir.release %><%= dir.img %>*.{png,jpg,gif}"
+          dest: "./"
+        ]
 
   require('load-grunt-tasks') grunt #プラグイン読み込み
  
   #ディレクトリ構築
   grunt.registerTask "init", ()->
     grunt.task.run('bower:install')
-    grunt.task.run('copy:init')
     grunt.file.defaultEncoding = 'utf8'
     grunt.file.mkdir('htdocs')
     grunt.file.mkdir('htdocs/_dev')
@@ -169,7 +146,6 @@ module.exports = (grunt)->
     grunt.file.mkdir('htdocs/release/files/css')
     grunt.file.mkdir('htdocs/release/files/img')
     grunt.file.mkdir('htdocs/release/files/js')
-    grunt.task.run('clean:init')
 
   grunt.registerTask "default", ['connect','watch'] #コーディング時
-  grunt.registerTask "release", ['uglify','cssmin','clean:build','copy:build'] #公開時に実行するタスク
+  grunt.registerTask "release", ['uglify', 'cssmin','clean','copy:build', 'imagemin'] #公開時に実行するタスク
