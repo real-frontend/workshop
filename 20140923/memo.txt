@@ -1,0 +1,34 @@
+
+今日のgitとgitHubをやってみる
+
+gitHubのアカウントを取得
+https://github.com/
+
+PCにGit、SourceTree（Gitも一緒に）をインストール
+
+SSHの公開鍵を作成しGithubに登録
+ローカルに「.shh」フォルダを作成
+http://monsat.hatenablog.com/entry/generating-ssh-keys-for-github
+
+HTTPS clone URLのコピーしてSourceTreeでクローン作成
+
+ローカルファイル更新、コミット後
+プッシュで新しく作ったリポジトリのパス
+SSH　git@github.com:hogehoge/hogehoge.git
+でプッシュ
+
+※windowsでつまづくところ
+ssh-keygen.exeが全然実行できない
+http://webdev.jp.net/ssh-keygen-egit-windows/
+
+ソースツリーの設定
+ツール＞オプション
+SSHクライアントの設定
+Putty→OpenSSHに変更する！
+
+Nodo.jsとGruntをインストール
+
+
+
+
+
