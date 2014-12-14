@@ -5,9 +5,10 @@ workshop
 
 次回の予定　20141221
 ---------
-- 第１部「未定」
+- 第１部「Todoアプリのモックアップを作ってレビュー」
 - 第２部「発表プレゼン」
   - 「未定」 by tkm-ymmt
+  - 「Backbone.jsの抽象理解」 by nakagaw<br><span style="font-size:10px;color:#888;">※もしかしたら第1部と合体</span>
 - 忘年会＆懇親会
 
 
