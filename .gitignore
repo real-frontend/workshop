@@ -5,3 +5,6 @@ npm-debug.log
 .DS_store
 */.sass-cache
 /_takumi
+20141221/od/_lib/
+20141221/od/bower_components/
+20141221/od/node_modules/

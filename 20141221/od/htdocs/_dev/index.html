@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>OD-Do</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="files/js/jquery.js"></script>
+</head>
+<body>
+
+  <div class="l-container" id="todo-container">
+    <h1>OD-Do</h1>
+    <p>かっこいいToDoサービス オーディードゥー！</p>
+
+    <div class="l-input" id="view-input">
+      <input type="text" id="elm-textField"><button id="evt-add">オーディードゥー</button>
+    </div>
+
+    <div class="l-list" id="view-list">
+      <h2>タスク一覧はここだよ！</h2>
+    </div>
+
+    <div class="l-history" id="view-history">
+      <h2>完了したタスクはここに入るよ！</h2>
+    </div>
+
+  </div>
+
+  <script>
+    (function($){
+      var elm = {
+        $container: $('#todo-container'),
+        $btn: $('#evt-add'),
+        $textField: $('#elm-textField'),
+        $list: $('#view-list'),
+        $history: $('#view-history')
+      };
+
+      var checkList, addList;
+
+      //ボタンイベントセットアップ
+      elm.$btn.on('click', function(){
+        var text = elm.$textField.val();
+
+        if(!text){ //空ならreturn
+          return;
+        }
+        elm.$textField.val('');
+        addList(elm.$list, text);
+      });
+
+      //チェックボックスイベントセットアップ
+      elm.$list.on('change', 'input', function(){
+        var text = $(this).parent().clone();
+        $(this).parent().remove();
+        addList(elm.$history, text, true);
+      });
+
+      //チェックボックスイベントセットアップ
+      elm.$history.on('change', 'input', function(){
+        var text = $(this).parent().clone();
+        $(this).parent().remove();
+        addList(elm.$list, text, true);
+      });
+
+      //ul存在チェック
+      checkList = function(e){
+        return e.find('ul').length;
+      };
+
+      //リスト追加
+      addList = function(e, text, clone){
+        if(checkList(e) <= 0){ //ulがあるかないか
+          e.append('<ul/>');
+        }
+        if(clone){
+          e.find('ul').append(text);
+        }
+        else {
+          e.find('ul').append('<li><input type="checkbox">' + text + '</li>');
+        }
+      };
+
+    })(jQuery);
+
+  </script>
+
+</body>
+</html>
