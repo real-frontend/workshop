@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Backbone.js</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/files/css/normalize.css">
+        <link rel="stylesheet" href="/files/css/main.css">
+        <script src="/files/js/lib/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+
+
+<h1>Tasks</h1>
+<form id="addTask">
+    <input type="text" id="title">
+    <input type="submit" value="add">
+    <span id="error"></span>
+</form>
+
+<div id="tasks"></div>
+<p>残タスク <span id="count"></span></p>
+
+ <script type="text/template" id="task-template">
+ <label>
+ <input type="checkbox" class="toggle" <%= completed ? 'checked': '' %>>
+<span class="<%= completed ? 'completed' : '' %>"><%= title %></span>
+</label>
+<span class="delete">[×]</span>
+</script>
+
+<script src="/files/js/lib/jquery.js"></script>
+<script src="/files/js/lib/underscore.js"></script>
+<script src="/files/js/lib/backbone.js"></script>
+<script src="/files/js/lib/backbone.localStorage.js"></script>
+
+
+<script src="/files/js/app.js"></script>
+<!-- <script src="/files/js/models.js"></script>
+<script src="/files/js/container.js"></script>
+<script src="/files/js/todo_view.js"></script>
+<script src="/files/js/form_view.js"></script>
+<script src="/files/js/router.js"></script>
+<script src="/files/js/control.js"></script> -->
+
+
+
+
+
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    </body>
+</html>

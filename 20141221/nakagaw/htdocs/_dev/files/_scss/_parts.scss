@@ -1,0 +1,34 @@
+.btn {
+    color: $main_color;
+}
+
+ul {
+	margin: 3em 0;
+	padding: 0;
+	border-top: 1px solid #eee;
+}
+
+li {
+	list-style: none;
+	padding: 0.5em 0;
+	font-size: 130%;
+	border-bottom: 1px solid #eee;
+}
+
+label,input[type="checkbox"] {
+	cursor: pointer;
+}
+
+.delete{
+	float: right;
+	cursor: pointer;
+}
+
+.delete:hover {
+	color: #ddd;
+}
+
+.completed {
+	text-decoration: line-through;
+	color: #888;
+}

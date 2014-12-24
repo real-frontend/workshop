@@ -1,0 +1,9 @@
+$main_color : #ff0;
+$sub1_color : #f0f;
+$sub2_color : #f00;
+
+@mixin box_width($val) {
+  width: $val;
+  //height: $val + 100; 出ない
+  /* これはでる */
+}
